@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom'; // changed
 
-import SignUp from './components/SignUp';
-import LogIn from './components/LogIn';
+import SignUp from './components/SignUp'; // new
+import LogIn from './components/LogIn'; // new
 
 import './App.css';
 
-function App() {
+// changed
+function App () {
   return (
     <Switch>
       <Route exact path='/' render={() => (
