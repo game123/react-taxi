@@ -1,12 +1,25 @@
 describe('Authentication', function() {
     it('Can log in.', function () {
+        // new
+        cy.intercept('POST', 'log_in', {
+            statusCode: 200,
+            body: {
+                'access': 'ACCESS_TOKEN',
+                'refresh': 'REFRESH_TOKEN'
+            }
+
+        }).as('logIn');
+
         cy.visit('/#/log-in');
         cy.get('input#username').type('gary.cole@example.com');
         cy.get('input#password').type('pAssw0rd', { log: false });
         cy.get('button').contains('Log in').click();
-        cy.hash().should('eq', '#/');
 
         // new
+        cy.wait('@login');
+
+        cy.hash().should('eq', '#/');
+
         cy.get('button').contains('Log out');
     });
 
