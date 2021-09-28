@@ -8,9 +8,13 @@ function LogIn (props) {
   const [isSubmitted, setSubmitted] = useState(false);
 
   // new
-  const onSubmit = (values, actions) => {
-    props.logIn(values.user, values.password);
-    setSubmitted(true);
+  const onSubmit = async (values, actions) => {
+    try {  
+      await props.logIn(values.user, values.password);
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // new
