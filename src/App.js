@@ -54,11 +54,32 @@ function App () {
           <Route exact path='/' render={() => (
             <div className='middle-center'>
               <h1 className='landing logo'>Taxi</h1>
-              <Link className='btn btn-primary' to='/sign-up'>Sign up</Link>
-              <Link className='btn btn-primary' to='/log-in'>Log in</Link>
+              {
+                !isLoggedIn &&
+                <Link 
+                  id='signUp'
+                  className='btn btn-primary' 
+                  to='/sign-up'
+                >Sign up</Link>
+              }
+              {
+                !isLoggedIn &&
+                <Link 
+                  id='logIn'
+                  className='btn btn-primary' 
+                  to='/log-in'
+                >Log in</Link>
+              }
             </div>
           )} />
-          <Route path='/sign-up' component={SignUp} />
+          <Route path='/sign-up' render={() => (
+            isLoggedIn ? (
+              <Redirect to='/' />
+            ) : (
+              <SignUp />
+            )
+          )} />
+
           {/* changed */}
           <Route path='/log-in' render={() => (
             isLoggedIn ? (
