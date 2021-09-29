@@ -7,12 +7,22 @@ function LogIn (props) {
 
   // changed
   const onSubmit = async (values, actions) => {
-    try {  
-      await props.logIn(values.user, values.password);
-    } catch (error) {
+    try {
+      const { response, isError } = await props.logIn(
+        values.username,
+        values.password
+      );
+      if (isError) {
+        const data = response.response.data;
+        for (const value in data) {
+          actions.setFieldError(value, data[value].join(' '));
+        }
+      }
+    }
+    catch (error) {
       console.error(error);
     }
-  };
+  }
 
   return (
     <Row>
@@ -30,32 +40,32 @@ function LogIn (props) {
                 password: ''
               }}
               onSubmit={onSubmit}
-              render = {({
+            >
+              {({
+                errors, // new
                 handleChange,
                 handleSubmit,
+                isSubmitting, // new
                 values
               }) => (
-                <Form noValidate onSubmit={handleSubmit}>
-                  <Form.Group controlId='username'>
-                    <Form.Label>Username:</Form.Label>
-                    <Form.Control 
-                      name='username' 
-                      onChange={handleChange}
-                      value={values.username}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId='password'>
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control 
-                      name='password' 
-                      onChange={handleChange}
-                      type='password'
-                      value={values.password}
-                    />
-                  </Form.Group>
-                  <Button block type='submit' variant='primary'>Log in</Button>
-                </Form>
-              )} />
+                {/* new */}
+                <div>
+                  {
+                    '__all__' in errors &&
+                    <Alert variant='danger'>
+                      { errors['__all__'] }
+                    </Alert>
+                  }
+                  <Form noValidate onSubmit={handleSubmit}>
+                    
+                    <Button 
+                      block 
+                      disabled={isSubmitting}
+                      type='submit' variant='primary'>Log in</Button>
+                  </Form>
+                </div>
+              )}
+              </Formik>
           </Card.Body>
           <p className='mt-3 text-center'>
             Don't have an account? <Link to='/sign-up'>Sign up!</Link>

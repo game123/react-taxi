@@ -20,17 +20,22 @@ function App () {
 
   // new
   const logIn = async (username, password) => {
-    const url = '/api/log_in';
+    const url = '/api/log_in/';
     try {
       const response = await axios.post(url, { username, password });
       window.localStorage.setItem(
         'taxi.auth', JSON.stringify(response.data)
       );
       setLoggedIn(true);
-    } catch (error) {
-      console.error(error);
+      // new
+      return { response, isError: false };
     }
-  }
+    catch (error) {
+      console.error(error);
+      // new
+      return { response: error, isError: true };
+    }
+  };
 
   return (
     <div>
