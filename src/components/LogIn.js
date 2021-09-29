@@ -1,11 +1,11 @@
 import React from 'react';
-import { Formik } from 'formik'
-import { Breadcrumb, Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { Formik } from 'formik';
+import {
+  Alert, Breadcrumb, Button, Card, Col, Form, Row
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function LogIn (props) {
-
-  // changed
   const onSubmit = async (values, actions) => {
     try {
       const { response, isError } = await props.logIn(
@@ -42,14 +42,13 @@ function LogIn (props) {
               onSubmit={onSubmit}
             >
               {({
-                errors, // new
+                errors,
                 handleChange,
                 handleSubmit,
-                isSubmitting, // new
+                isSubmitting,
                 values
               }) => (
-                {/* new */}
-                <div>
+                <>
                   {
                     '__all__' in errors &&
                     <Alert variant='danger'>
@@ -57,22 +56,39 @@ function LogIn (props) {
                     </Alert>
                   }
                   <Form noValidate onSubmit={handleSubmit}>
-                    
-                    <Button 
-                      block 
+                    <Form.Group controlId='username'>
+                      <Form.Label>Username:</Form.Label>
+                      <Form.Control
+                        name='username'
+                        onChange={handleChange}
+                        value={values.username}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId='password'>
+                      <Form.Label>Password:</Form.Label>
+                      <Form.Control
+                        name='password'
+                        onChange={handleChange}
+                        type='password'
+                        value={values.password}
+                      />
+                    </Form.Group>
+                    <Button
+                      block
                       disabled={isSubmitting}
-                      type='submit' variant='primary'>Log in</Button>
+                      type='submit'
+                      variant='primary'
+                    >Log in</Button>
                   </Form>
-                </div>
+                </>
               )}
-              </Formik>
+            </Formik>
           </Card.Body>
           <p className='mt-3 text-center'>
             Don't have an account? <Link to='/sign-up'>Sign up!</Link>
           </p>
         </Card>
       </Col>
-      
     </Row>
   );
 }
