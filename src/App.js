@@ -5,6 +5,8 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
+
+import { isDriver, isRider } from './services/AuthService'; 
 import SignUp from './components/SignUp'; // new
 import LogIn from './components/LogIn'; // new
 
@@ -77,12 +79,13 @@ function App () {
                 >Sign up</Link>
               }
               {
-                !isLoggedIn &&
-                <Link 
-                  id='logIn'
-                  className='btn btn-primary' 
-                  to='/log-in'
-                >Log in</Link>
+                isRider() &&(
+                  <Link 
+                    id='logIn'
+                    className='btn btn-primary' 
+                    to='/rider'
+                  >Dashboard</Link>
+                )
               }
             </div>
           )} />
