@@ -11,6 +11,9 @@ import LogIn from './components/LogIn'; // new
 import './App.css';
 import axios from 'axios';
 
+import Driver from './components/Driver.js';
+import Rider from './components/Rider';
+
 // changed
 function App () {
   // new
@@ -20,7 +23,8 @@ function App () {
 
   // new
   const logIn = async (username, password) => {
-    const url = '/api/log_in/';
+    // const url = '/api/log_in/';
+    const url = `${process.env.REACT_APP_BASE_URL}/api/log_in/`;
     try {
       const response = await axios.post(url, { username, password });
       window.localStorage.setItem(
@@ -97,6 +101,12 @@ function App () {
             ) : (
               <LogIn logIn={logIn} />
             )
+          )} />
+          <Route path='/driver' render={() => (
+            <Driver />
+          )} />
+          <Route path='/rider' render={() => (
+            <Rider />
           )} />
         </Switch>
       </Container>
