@@ -104,6 +104,26 @@ function App () {
               }
             </div>
           )} />
+          <Route path='/sign-up' render={() => (
+            isLoggedIn ? (
+              <Redirect to='/' />
+            ) : (
+              <SignUp />
+            )
+          )} />
+          <Route path='/log-in' render={() => (
+            isLoggedIn ? (
+              <Redirect to='/' />
+            ) : (
+              <LogIn logIn={logIn} />
+            )
+          )} />
+          <Route path='/driver' render={() => (
+            <Driver />
+          )} />
+          <Route path='/rider' render={() => (
+            <Rider />
+          )} />
         </Switch>
       </Container>
     </div>
