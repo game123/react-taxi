@@ -9,7 +9,7 @@ const driverLastName = faker.name.lastName();
 const riderEmail = faker.internet.email();
 const riderFirstName = faker.name.firstName();
 const riderLastName = faker.name.lastName();
-
+const { webSocket } = require('rxjs/webSocket');
 
 const tripResponse = [
   {
@@ -150,4 +150,33 @@ describe('The driver dashboard', function () {
       .should('have.length', 1)
       .and('contain.text', 'STARTED');
   });
+
+  it('Can receive a rider request', function () {
+    cy.intercept('trip', {
+      statusCode: 200,
+      body: []
+    }).as('getTrips');
+
+    cy.logIn(driverEmail);
+
+    cy.visit('/#/driver');
+    cy.wait('@getTrips');
+
+    // Requested trips
+    cy.get('[data-cy=trip-card]')
+      .eq(1)
+      .contains('No trips');
+
+    // Make trip request as rider
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8003/api/log_in/',
+      body: {
+        "username": riderEmail,
+        "password": "pAssw0rd"
+      }
+    })
+  })
+
+
 });
