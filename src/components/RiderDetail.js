@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import TripMedia from './TripMedia';
 import { getTrip } from '../services/TripService';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function RiderDetail ({ match }) {
   const [trip, setTrip] = useState(null);

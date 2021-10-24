@@ -12,9 +12,6 @@ function Driver (props) {
         return <Redirect to='/' />
     }
 
-
-
-
     return (
         <Switch>
             <Route path='/driver/:id' component={DriverDetail} />

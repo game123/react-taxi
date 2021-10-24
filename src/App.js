@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Button, Container, Form, Navbar
+  Button, Container, Form, Navbar, Nav
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
@@ -57,6 +57,15 @@ function App () {
         <Navbar.Toggle />
         <Navbar.Collapse>
           { /* new */ }
+          {
+            isRider() && (
+              <Nav className='mr-auto'>
+                <LinkContainer to='/rider/request'>
+                  <Nav.Link>Request a trip</Nav.Link>
+                </LinkContainer>
+              </Nav>
+            )
+          }
           {
             isLoggedIn && 
             <Form inline className='ml-auto'>
